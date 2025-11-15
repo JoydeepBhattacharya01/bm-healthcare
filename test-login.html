@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Test</title>
+</head>
+<body>
+    <h1>BM Healthcare Login Test</h1>
+    
+    <h2>Test User Login</h2>
+    <button onclick="testUserLogin()">Test User Login</button>
+    
+    <h2>Test Admin Login</h2>
+    <button onclick="testAdminLogin()">Test Admin Login</button>
+    
+    <h2>Test Receptionist Login</h2>
+    <button onclick="testReceptionistLogin()">Test Receptionist Login</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        const API_URL = 'http://192.168.1.5:5001/api';
+        
+        async function testLogin(email, password, role) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<p>Testing ${role} login...</p>`;
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML += `<p style="color: green;">✓ ${role} Login SUCCESS!</p>`;
+                    resultDiv.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    resultDiv.innerHTML += `<p style="color: red;">✗ ${role} Login FAILED!</p>`;
+                    resultDiv.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML += `<p style="color: red;">✗ Network Error: ${error.message}</p>`;
+            }
+        }
+        
+        function testUserLogin() {
+            testLogin('john@example.com', 'user123', 'User');
+        }
+        
+        function testAdminLogin() {
+            testLogin('admin1@gmail.com', 'admin123', 'Admin');
+        }
+        
+        function testReceptionistLogin() {
+            testLogin('recep1@gmail.com', 'recep1@gmail.com', 'Receptionist');
+        }
+    </script>
+</body>
+</html>
