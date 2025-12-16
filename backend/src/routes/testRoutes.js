@@ -18,14 +18,14 @@ const { protect, admin, receptionistOrAdmin } = require('../middleware/authMiddl
 // Test routes
 router.route('/')
   .get(getTests)
-  .post(protect, admin, createTest);
+  .post(protect, receptionistOrAdmin, createTest);
 
 router.get('/categories/list', getTestCategories);
 
 router.route('/:id')
   .get(getTestById)
   .put(protect, admin, updateTest)
-  .delete(protect, admin, deleteTest);
+  .delete(protect, receptionistOrAdmin, deleteTest);
 
 // Test booking routes
 router.route('/bookings')

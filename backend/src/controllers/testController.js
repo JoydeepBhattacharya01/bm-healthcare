@@ -23,8 +23,10 @@ const getTests = asyncHandler(async (req, res) => {
     ];
   }
 
-  if (isActive !== undefined) {
+  if (isActive !== undefined && isActive !== 'all') {
     query.isActive = isActive === 'true';
+  } else if (isActive !== 'all') {
+    query.isActive = true;
   }
 
   const tests = await Test.find(query)

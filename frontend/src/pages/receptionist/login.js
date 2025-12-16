@@ -29,9 +29,7 @@ export default function ReceptionistLogin() {
     setLoading(true);
 
     try {
-      console.log('Receptionist login attempt:', formData.email);
       const result = await login(formData.email, formData.password, true);
-      console.log('Receptionist login result:', result);
       
       if (result.success && result.user) {
         // Check if user is actually a receptionist or admin
@@ -227,16 +225,10 @@ export default function ReceptionistLogin() {
                     </div>
                   </div>
 
-                  <div className="mt-6 grid grid-cols-2 gap-3">
-                    <Link
-                      href="/admin/login"
-                      className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-                    >
-                      Admin Login
-                    </Link>
+                  <div className="mt-6">
                     <Link
                       href="/login"
-                      className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                      className="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                     >
                       Patient Login
                     </Link>

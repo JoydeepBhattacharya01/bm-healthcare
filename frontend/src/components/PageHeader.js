@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const PageHeader = ({ title, subtitle, backgroundImage = '/images/hero-1.jpeg' }) => {
   return (
-    <div className="relative h-48 md:h-64 overflow-hidden">
+    <div className="relative h-48 md:h-64 overflow-hidden mt-20">
       {/* Background Image */}
       <Image
         src={backgroundImage}

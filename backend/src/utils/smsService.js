@@ -37,26 +37,26 @@ const sendSMS = async (phone, message) => {
 
 // SMS Templates
 const smsTemplates = {
-  appointmentBooked: (name, doctorName, date, time) => 
-    `Dear ${name}, your appointment with Dr. ${doctorName} is booked for ${date} at ${time}. BM Healthcare`,
+  appointmentBooked: (name, doctorName, date, time, bookingId) => 
+    `Dear ${name}, your appointment with Dr. ${doctorName} is booked for ${date} at ${time}. Booking ID: ${bookingId}. BM Healthcare`,
   
-  appointmentConfirmed: (name, doctorName, date, time) => 
-    `Dear ${name}, your appointment with Dr. ${doctorName} on ${date} at ${time} is confirmed. BM Healthcare`,
+  appointmentConfirmed: (name, doctorName, date, time, bookingId) => 
+    `Dear ${name}, your appointment with Dr. ${doctorName} on ${date} at ${time} is confirmed. Booking ID: ${bookingId}. BM Healthcare`,
   
-  appointmentCancelled: (name, doctorName, date) => 
-    `Dear ${name}, your appointment with Dr. ${doctorName} on ${date} has been cancelled. BM Healthcare`,
+  appointmentCancelled: (name, doctorName, date, bookingId) => 
+    `Dear ${name}, your appointment with Dr. ${doctorName} on ${date} has been cancelled. Booking ID: ${bookingId}. BM Healthcare`,
   
-  testBooked: (name, testName, date, time) => 
-    `Dear ${name}, your test booking for ${testName} is scheduled on ${date} at ${time}. BM Healthcare`,
+  testBooked: (name, testName, date, time, bookingId) => 
+    `Dear ${name}, your test booking for ${testName} is scheduled on ${date} at ${time}. Booking ID: ${bookingId}. BM Healthcare`,
   
-  testConfirmed: (name, testName, date, time) => 
-    `Dear ${name}, your test ${testName} on ${date} at ${time} is confirmed. BM Healthcare`,
+  testConfirmed: (name, testName, date, time, bookingId) => 
+    `Dear ${name}, your test ${testName} on ${date} at ${time} is confirmed. Booking ID: ${bookingId}. BM Healthcare`,
   
-  reportReady: (name, testName) => 
-    `Dear ${name}, your ${testName} report is ready. Please login to download. BM Healthcare`,
+  reportReady: (name, testName, bookingId) => 
+    `Dear ${name}, your ${testName} report is ready. Booking ID: ${bookingId}. Check online or visit us. BM Healthcare`,
   
-  paymentSuccess: (name, amount, bookingType) => 
-    `Dear ${name}, payment of Rs.${amount} for ${bookingType} received successfully. BM Healthcare`
+  paymentSuccess: (name, amount, bookingType, bookingId) => 
+    `Dear ${name}, payment of Rs.${amount} for ${bookingType} received successfully. Booking ID: ${bookingId}. BM Healthcare`
 };
 
 module.exports = { sendSMS, smsTemplates };

@@ -32,8 +32,9 @@ const doctorSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'Please add email'],
+    required: false,
     unique: true,
+    sparse: true,
     lowercase: true
   },
   phone: {

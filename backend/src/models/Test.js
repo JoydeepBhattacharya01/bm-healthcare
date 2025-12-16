@@ -7,13 +7,11 @@ const testSchema = new mongoose.Schema({
     trim: true
   },
   description: {
-    type: String,
-    required: [true, 'Please add test description']
+    type: String
   },
   category: {
     type: String,
-    required: [true, 'Please add test category'],
-    enum: ['Blood Test', 'Urine Test', 'Imaging', 'Cardiac', 'Pathology', 'Health Package', 'Other']
+    required: [true, 'Please add test category']
   },
   price: {
     type: Number,

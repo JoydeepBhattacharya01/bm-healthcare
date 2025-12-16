@@ -8,8 +8,7 @@ import { FiMail, FiLock, FiEye, FiEyeOff, FiUser, FiShield, FiUserCheck } from '
 export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
-    role: 'user' // default to patient/user
+    password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,68 +23,20 @@ export default function Login() {
     });
   };
 
-  const handleRoleSelect = (role) => {
-    setFormData({
-      ...formData,
-      role: role
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      console.log('Attempting login with:', formData.email);
       const result = await login(formData.email, formData.password);
-      console.log('Login result:', result);
-      
       if (!result.success) {
-        console.error('Login failed:', result.message);
         setLoading(false);
       }
-      // If success, AuthContext will handle redirect
     } catch (error) {
       console.error('Login error:', error);
       setLoading(false);
     }
   };
-
-  const roleOptions = [
-    {
-      value: 'user',
-      title: 'Patient',
-      description: 'Book appointments & view reports',
-      icon: <FiUser className="w-6 h-6" />,
-      color: 'blue',
-      bgColor: 'bg-blue-50',
-      textColor: 'text-blue-600',
-      borderColor: 'border-blue-500',
-      hoverColor: 'hover:bg-blue-100'
-    },
-    {
-      value: 'admin',
-      title: 'Admin',
-      description: 'System management',
-      icon: <FiShield className="w-6 h-6" />,
-      color: 'indigo',
-      bgColor: 'bg-indigo-50',
-      textColor: 'text-indigo-600',
-      borderColor: 'border-indigo-500',
-      hoverColor: 'hover:bg-indigo-100'
-    },
-    {
-      value: 'receptionist',
-      title: 'Receptionist',
-      description: 'Front desk operations',
-      icon: <FiUserCheck className="w-6 h-6" />,
-      color: 'teal',
-      bgColor: 'bg-teal-50',
-      textColor: 'text-teal-600',
-      borderColor: 'border-teal-500',
-      hoverColor: 'hover:bg-teal-100'
-    }
-  ];
 
   return (
     <Layout title="Login - BM Healthcare">
@@ -96,34 +47,6 @@ export default function Login() {
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
               <p className="text-gray-600 mt-2">Sign in to your account</p>
-            </div>
-
-            {/* Role Selection */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                Login As
-              </label>
-              <div className="grid grid-cols-3 gap-3">
-                {roleOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => handleRoleSelect(option.value)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      formData.role === option.value
-                        ? `${option.borderColor} ${option.bgColor}`
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                  >
-                    <div className={`flex flex-col items-center gap-2 ${
-                      formData.role === option.value ? option.textColor : 'text-gray-600'
-                    }`}>
-                      {option.icon}
-                      <span className="text-xs font-medium">{option.title}</span>
-                    </div>
-                  </button>
-                ))}
-              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -194,8 +117,8 @@ export default function Login() {
                 </div>
 
                 <div className="text-sm">
-                  <Link href="/forgot-password" className="text-primary-500 hover:text-primary-600">
-                    Forgot password?
+                  <Link href="/contact?topic=account" className="text-primary-500 hover:text-primary-600">
+                    Need help? Contact support
                   </Link>
                 </div>
               </div>

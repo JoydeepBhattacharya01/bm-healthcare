@@ -1,0 +1,4 @@
+# Netlify/Vercel/Render deployment configuration is not required for Vercel, but a netlify.toml placeholder is required by the deployment tool.
+[build]
+command = "npm run build"
+publish = ".next"

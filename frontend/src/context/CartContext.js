@@ -21,7 +21,8 @@ export function CartProvider({ children }) {
 
   const addToCart = (test) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item._id === test._id);
+      const testId = test.id || test._id;
+      const existingItem = prevCart.find((item) => (item.id || item._id) === testId);
       
       if (existingItem) {
         toast.info('Test already in cart');
@@ -29,7 +30,7 @@ export function CartProvider({ children }) {
       }
       
       toast.success(`${test.name} added to cart`);
-      return [...prevCart, { ...test, quantity: 1 }];
+      return [...prevCart, { ...test, _id: testId, quantity: 1 }];
     });
   };
 

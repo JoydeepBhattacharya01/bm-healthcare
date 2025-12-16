@@ -9,18 +9,18 @@ const {
   getDoctorSlots,
   getSpecializations
 } = require('../controllers/doctorController');
-const { protect, admin } = require('../middleware/authMiddleware');
+const { protect, admin, receptionistOrAdmin } = require('../middleware/authMiddleware');
 
 router.route('/')
   .get(getDoctors)
-  .post(protect, admin, createDoctor);
+  .post(protect, receptionistOrAdmin, createDoctor);
 
 router.get('/specializations/list', getSpecializations);
 
 router.route('/:id')
   .get(getDoctorById)
-  .put(protect, admin, updateDoctor)
-  .delete(protect, admin, deleteDoctor);
+  .put(protect, receptionistOrAdmin, updateDoctor)
+  .delete(protect, receptionistOrAdmin, deleteDoctor);
 
 router.get('/:id/slots', getDoctorSlots);
 

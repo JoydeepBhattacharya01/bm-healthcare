@@ -16,16 +16,16 @@ const Footer = () => {
               diagnostic tests, and expert consultations.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-primary-400 transition-all duration-300 hover:scale-110">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-primary-400 transition-all duration-300 hover:scale-110">
                 <FiFacebook size={20} />
               </a>
-              <a href="#" className="hover:text-primary-400 transition-all duration-300 hover:scale-110">
+              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-primary-400 transition-all duration-300 hover:scale-110">
                 <FiTwitter size={20} />
               </a>
-              <a href="#" className="hover:text-primary-400 transition-all duration-300 hover:scale-110">
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-primary-400 transition-all duration-300 hover:scale-110">
                 <FiInstagram size={20} />
               </a>
-              <a href="#" className="hover:text-primary-400 transition-all duration-300 hover:scale-110">
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-primary-400 transition-all duration-300 hover:scale-110">
                 <FiLinkedin size={20} />
               </a>
             </div>
@@ -36,8 +36,8 @@ const Footer = () => {
             <h3 className="text-white text-lg font-bold mb-4 border-b-2 border-primary-600 pb-2 inline-block">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
-                  About Us
+                <Link href="/" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
+                  Home
                 </Link>
               </li>
               <li>
@@ -68,27 +68,27 @@ const Footer = () => {
             <h3 className="text-white text-lg font-bold mb-4 border-b-2 border-primary-600 pb-2 inline-block">Services</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/services#consultation" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
+                <Link href="/services#core-services" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
                   Doctor Consultation
                 </Link>
               </li>
               <li>
-                <Link href="/services#lab-tests" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
+                <Link href="/services#core-services" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
                   Laboratory Tests
                 </Link>
               </li>
               <li>
-                <Link href="/services#imaging" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
+                <Link href="/services#special-services" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
                   Medical Imaging
                 </Link>
               </li>
               <li>
-                <Link href="/services#health-packages" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
+                <Link href="/services#core-services" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
                   Health Packages
                 </Link>
               </li>
               <li>
-                <Link href="/services#home-collection" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
+                <Link href="/services#special-services" className="hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block">
                   Home Sample Collection
                 </Link>
               </li>
@@ -106,10 +106,6 @@ const Footer = () => {
               <li className="flex items-center space-x-3">
                 <FiPhone className="flex-shrink-0" />
                 <span>+91 9830016600 / +91 9830036600</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <FiMail className="flex-shrink-0" />
-                <span>info@bmhealthcare.com</span>
               </li>
             </ul>
             <div className="mt-4">
@@ -131,6 +127,11 @@ const Footer = () => {
             <Link href="/terms-and-conditions" className="hover:text-primary-400 transition-all duration-300">
               Terms & Conditions
             </Link>
+          </div>
+          <div className="mt-4 pt-4 border-t border-gray-800">
+            <p className="text-gray-500 text-xs">
+              Developed and maintained by <span className="text-primary-400 font-semibold">Joydeep Bhattacharya</span>
+            </p>
           </div>
         </div>
       </div>

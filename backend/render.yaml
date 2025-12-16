@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: bm-healthcare-backend
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRE
+        value: 30d
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: SMS_API_KEY
+        sync: false
+      - key: SMS_SENDER_ID
+        value: BMHEALTH
+      - key: SMS_BASE_URL
+        value: https://api.textlocal.in/send/
+      - key: FRONTEND_URL
+        sync: false
+      - key: BACKEND_URL
+        sync: false

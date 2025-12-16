@@ -155,17 +155,17 @@ export default function AdminDashboard() {
   ];
 
   const quickActions = isAdmin ? [
-    { title: 'Manage Users', href: '/admin/users', icon: <FiUsers />, color: 'blue' },
-    { title: 'Manage Doctors', href: '/admin/doctors', icon: <FiActivity />, color: 'green' },
-    { title: 'View Appointments', href: '/admin/appointments', icon: <FiCalendar />, color: 'purple' },
-    { title: 'Manage Tests', href: '/admin/tests', icon: <FiFileText />, color: 'indigo' },
-    { title: 'View Reports', href: '/admin/reports', icon: <FiFileText />, color: 'teal' },
-    { title: 'System Settings', href: '/admin/settings', icon: <FiShield />, color: 'orange' }
+    { title: 'Manage Users', href: '/receptionist/dashboard', tab: 'patients', icon: <FiUsers />, color: 'blue' },
+    { title: 'Manage Doctors', href: '/doctors', icon: <FiActivity />, color: 'green' },
+    { title: 'View Appointments', href: '/receptionist/dashboard', tab: 'appointments', icon: <FiCalendar />, color: 'purple' },
+    { title: 'Manage Tests', href: '/tests', icon: <FiFileText />, color: 'indigo' },
+    { title: 'Book Doctor', href: '/receptionist/dashboard', tab: 'book-doctor', icon: <FiCalendar />, color: 'teal' },
+    { title: 'Book Test', href: '/receptionist/dashboard', tab: 'book-test', icon: <FiFileText />, color: 'orange' }
   ] : [
-    { title: 'View Appointments', href: '/admin/appointments', icon: <FiCalendar />, color: 'purple' },
-    { title: 'Register Patient', href: '/admin/patients/new', icon: <FiUsers />, color: 'blue' },
-    { title: 'Book Test', href: '/admin/tests/book', icon: <FiFileText />, color: 'indigo' },
-    { title: 'View Reports', href: '/admin/reports', icon: <FiFileText />, color: 'teal' }
+    { title: 'View Appointments', href: '/receptionist/dashboard', tab: 'appointments', icon: <FiCalendar />, color: 'purple' },
+    { title: 'Register Patient', href: '/receptionist/dashboard', tab: 'patients', icon: <FiUsers />, color: 'blue' },
+    { title: 'Book Test', href: '/receptionist/dashboard', tab: 'book-test', icon: <FiFileText />, color: 'indigo' },
+    { title: 'Book Doctor', href: '/receptionist/dashboard', tab: 'book-doctor', icon: <FiCalendar />, color: 'teal' }
   ];
 
   if (loading) {
@@ -183,7 +183,7 @@ export default function AdminDashboard() {
 
   return (
     <Layout title={`${isAdmin ? 'Admin' : 'Receptionist'} Dashboard - BM Healthcare`}>
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 py-8 pt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
@@ -227,10 +227,20 @@ export default function AdminDashboard() {
               {quickActions.map((action, index) => (
                 <button
                   key={index}
-                  onClick={() => router.push(action.href)}
-                  className={`p-4 rounded-lg border-2 border-gray-200 hover:border-${action.color}-500 hover:bg-${action.color}-50 transition-all text-center group`}
+                  onClick={() => {
+                    if (action.tab) {
+                      router.push(action.href);
+                      setTimeout(() => {
+                        const event = new CustomEvent('changeTab', { detail: action.tab });
+                        window.dispatchEvent(event);
+                      }, 500);
+                    } else {
+                      router.push(action.href);
+                    }
+                  }}
+                  className="p-4 rounded-lg border-2 border-gray-200 hover:border-primary-500 hover:bg-primary-50 transition-all text-center group"
                 >
-                  <div className={`text-${action.color}-600 mb-2 flex justify-center text-2xl`}>
+                  <div className="text-primary-600 mb-2 flex justify-center text-2xl">
                     {action.icon}
                   </div>
                   <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">

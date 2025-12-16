@@ -19,15 +19,15 @@ const FloatingButtons = () => {
         href={`https://wa.me/${whatsappNumber}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="floating-button bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
-        style={{ bottom: '6.5rem', right: '1.5rem' }}
-        aria-label="Contact on WhatsApp"
+        className="fixed bottom-28 right-4 sm:right-6 z-50 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-4"
+        aria-label="Book via WhatsApp"
       >
-        <FaWhatsapp size={28} />
+        <FaWhatsapp size={24} className="sm:w-7 sm:h-7" />
+        <span className="text-sm sm:text-base font-semibold whitespace-nowrap">Book via WhatsApp</span>
       </a>
 
       {/* Emergency Call Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
         {showOptions && (
           <div className="absolute bottom-20 right-0 bg-white rounded-2xl shadow-2xl p-4 mb-2 animate-fadeIn border border-gray-100">
             <div className="flex items-center justify-between mb-3">
@@ -60,10 +60,17 @@ const FloatingButtons = () => {
 
         <button
           onClick={() => setShowOptions(!showOptions)}
-          className="floating-button bg-gradient-to-br from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white"
-          aria-label="Emergency Call"
+          className="bg-gradient-to-br from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-4"
+          aria-label="Book via Call"
         >
-          {showOptions ? <FiX size={28} /> : <FiPhone size={28} />}
+          {showOptions ? (
+            <FiX size={24} className="sm:w-7 sm:h-7" />
+          ) : (
+            <>
+              <FiPhone size={24} className="sm:w-7 sm:h-7" />
+              <span className="text-sm sm:text-base font-semibold whitespace-nowrap">Book via Call</span>
+            </>
+          )}
         </button>
       </div>
     </>

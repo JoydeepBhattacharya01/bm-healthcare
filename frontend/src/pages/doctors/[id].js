@@ -93,14 +93,6 @@ export default function DoctorDetails() {
 
     try {
       setBookingLoading(true);
-      
-      // Check if user is logged in
-      const token = localStorage.getItem('token');
-      if (!token) {
-        toast.error('Please login to book an appointment');
-        router.push('/login');
-        return;
-      }
 
       const appointmentData = {
         doctorId: doctor._id,

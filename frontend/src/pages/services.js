@@ -1,8 +1,21 @@
 import Layout from '../components/Layout';
 import PageHeader from '../components/PageHeader';
 import Link from 'next/link';
-import Image from 'next/image';
-import { FiCalendar, FiActivity, FiHeart, FiHome, FiClock, FiShield, FiUsers, FiFileText, FiEye } from 'react-icons/fi';
+import {
+  FiCalendar,
+  FiActivity,
+  FiHeart,
+  FiHome,
+  FiClock,
+  FiShield,
+  FiUsers,
+  FiFileText,
+  FiEye,
+  FiCheckCircle,
+  FiArrowUpRight,
+  FiChevronRight,
+  FiTrendingUp
+} from 'react-icons/fi';
 import { FaAmbulance } from 'react-icons/fa';
 
 export default function Services() {
@@ -12,7 +25,8 @@ export default function Services() {
       icon: <FaAmbulance size={32} />,
       title: '24 Hours Ambulance Service',
       description: 'Emergency medical transport available round the clock',
-      image: '/images/ambu.jpeg',
+      accent: 'from-rose-500/15 via-orange-500/10 to-white',
+      iconGradient: 'from-rose-500 to-orange-500',
       features: [
         'Always ready for emergencies',
         'Patient transfer services',
@@ -24,7 +38,8 @@ export default function Services() {
       icon: <FiHome size={32} />,
       title: 'Home Collection Service',
       description: 'Blood Sample and ECG collection at your doorstep',
-      image: '/images/homecollection.jpeg',
+      accent: 'from-emerald-500/12 via-teal-500/10 to-white',
+      iconGradient: 'from-emerald-500 to-teal-500',
       features: [
         'Trained professionals',
         'Safe and hygienic',
@@ -36,7 +51,8 @@ export default function Services() {
       icon: <FiActivity size={32} />,
       title: 'Advanced Diagnostic Tests',
       description: 'CT Scan, MRI, ECHO, Endoscopy, Ultrasonography',
-      image: '/images/test.jpeg',
+      accent: 'from-blue-500/12 via-cyan-500/10 to-white',
+      iconGradient: 'from-blue-500 to-cyan-500',
       features: [
         'State-of-the-art equipment',
         'Experienced technicians',
@@ -48,7 +64,8 @@ export default function Services() {
       icon: <FiUsers size={32} />,
       title: 'Elderly Care',
       description: 'Priority home visits and comfortable facilities',
-      image: '/images/elder.jpeg',
+      accent: 'from-purple-500/12 via-indigo-500/10 to-white',
+      iconGradient: 'from-purple-500 to-indigo-500',
       features: [
         'Priority service',
         'Comfortable facilities',
@@ -60,7 +77,8 @@ export default function Services() {
       icon: <FiShield size={32} />,
       title: 'Police & Ex-Servicemen',
       description: 'Exclusive healthcare support with discounted services',
-      image: '/images/police.jpeg',
+      accent: 'from-sky-500/12 via-blue-500/10 to-white',
+      iconGradient: 'from-sky-500 to-blue-600',
       features: [
         'Discounted services',
         'Priority care',
@@ -72,7 +90,8 @@ export default function Services() {
       icon: <FiClock size={32} />,
       title: 'Quick Blood Reports',
       description: 'Blood reports within 1 to 4 hours',
-      image: '/images/delivery.png',
+      accent: 'from-amber-500/12 via-yellow-500/10 to-white',
+      iconGradient: 'from-amber-500 to-amber-600',
       features: [
         'Fast processing',
         'Reliable results',
@@ -84,7 +103,8 @@ export default function Services() {
       icon: <FiEye size={32} />,
       title: 'AIIMS Eye Specialist',
       description: 'Expert eye care by AIIMS-experienced doctors',
-      image: '/images/eye doctor.jpeg',
+      accent: 'from-indigo-500/12 via-violet-500/10 to-white',
+      iconGradient: 'from-indigo-500 to-violet-500',
       features: [
         'AIIMS-trained doctors',
         'Comprehensive eye care',
@@ -96,7 +116,8 @@ export default function Services() {
       icon: <FiHeart size={32} />,
       title: 'Swasthya Sathi',
       description: 'Treatment facilities for card holders',
-      image: '/images/swasthya sathi.jpeg',
+      accent: 'from-emerald-500/12 via-green-500/10 to-white',
+      iconGradient: 'from-emerald-500 to-green-600',
       features: [
         'Card holder benefits',
         'Renowned hospitals',
@@ -206,7 +227,7 @@ export default function Services() {
       />
 
       {/* Special Services Section */}
-      <section className="py-16 bg-gradient-to-b from-primary-50 via-white to-white">
+      <section id="special-services" className="py-16 bg-gradient-to-b from-primary-50 via-white to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="section-title">Special Services</h2>
@@ -217,32 +238,37 @@ export default function Services() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {specialServices.map((service, index) => (
-              <div key={index} className="card bg-white card-hover overflow-hidden group border border-gray-200 hover:border-primary-300 transition-all">
-                <div className="relative h-48 mb-4 overflow-hidden rounded-t-xl">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+              <div
+                key={index}
+                className={`card glass-card relative overflow-hidden group border border-white/60 bg-gradient-to-br ${service.accent} shadow-xl`}
+              >
+                <div className="absolute -right-10 -top-10 w-32 h-32 bg-white/40 rounded-full blur-3xl" aria-hidden="true" />
+                <div className="absolute -left-12 -bottom-16 w-40 h-40 bg-primary-100/60 rounded-full blur-3xl group-hover:opacity-90 transition-opacity" aria-hidden="true" />
+
+                <div className="relative flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.iconGradient} text-white grid place-items-center shadow-lg`}>
+                      {service.icon}
+                    </div>
+                    <span className="text-[11px] uppercase tracking-[0.18em] bg-white/70 backdrop-blur px-3 py-1 rounded-full text-gray-700 font-semibold border border-white/80">
+                      Priority
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{service.title}</h3>
+                    <p className="text-gray-600 text-sm">{service.description}</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    {service.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+                        <FiCheckCircle className="text-primary-500 mt-0.5" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="text-primary-600 mb-3 flex justify-center group-hover:scale-110 transition-transform">
-                  {service.icon}
-                </div>
-                <h3 className="text-lg font-bold mb-2 text-center text-gray-800 group-hover:text-primary-600 transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 text-sm text-center mb-4">
-                  {service.description}
-                </p>
-                <ul className="space-y-1 text-xs text-gray-600">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <span className="text-primary-500 mr-2">✓</span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
             ))}
           </div>
@@ -250,7 +276,7 @@ export default function Services() {
       </section>
 
       {/* Main Services */}
-      <section className="py-16 bg-white">
+      <section id="core-services" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="section-title">Core Services</h2>
@@ -261,25 +287,44 @@ export default function Services() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} className="card card-hover group border border-gray-200 hover:border-primary-300 transition-all">
-                <div className="text-primary-600 mb-4 flex justify-center group-hover:scale-110 transition-transform">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-center text-gray-800 group-hover:text-primary-600 transition-colors">{service.title}</h3>
-                <p className="text-gray-600 mb-4 text-center text-sm">{service.description}</p>
-                
-                <ul className="space-y-2 mb-6">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start text-sm text-gray-700">
-                      <span className="text-primary-500 mr-2">✓</span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div
+                key={index}
+                className="card card-hover group border border-primary-50/80 hover:border-primary-200/80 bg-white/90 backdrop-blur-sm relative overflow-hidden"
+              >
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-teal-400 to-emerald-500 opacity-80" aria-hidden="true" />
+                <div className="absolute -right-10 -top-10 w-32 h-32 bg-primary-50 rounded-full blur-2xl" aria-hidden="true" />
+                <div className="absolute -left-14 bottom-0 w-32 h-32 bg-secondary-50 rounded-full blur-2xl" aria-hidden="true" />
 
-                <Link href={service.link} className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-md hover:shadow-lg text-center block">
-                  Learn More
-                </Link>
+                <div className="relative flex flex-col gap-4 h-full">
+                  <div className="flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 text-white grid place-items-center shadow-lg group-hover:scale-105 transition-transform">
+                      {service.icon}
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-primary-600 transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm">{service.description}</p>
+                  </div>
+                  
+                  <ul className="space-y-2 mb-4 flex-1">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start text-sm text-gray-700">
+                        <FiCheckCircle className="text-primary-500 mr-2 mt-0.5" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link
+                    href={service.link}
+                    className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-md hover:shadow-lg text-center flex items-center justify-center gap-2"
+                  >
+                    Learn More <FiArrowUpRight />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -287,7 +332,7 @@ export default function Services() {
       </section>
 
       {/* Specializations */}
-      <section className="py-16 bg-gradient-to-b from-white to-primary-50">
+      <section id="specializations" className="py-16 bg-gradient-to-b from-white to-primary-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="section-title">Medical Specializations</h2>
@@ -301,9 +346,10 @@ export default function Services() {
               <Link
                 key={index}
                 href={`/doctors?specialization=${spec}`}
-                className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center hover:bg-primary-50"
+                className="bg-white/90 border border-primary-50/80 p-5 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-between hover:bg-primary-50/60"
               >
                 <p className="font-semibold text-gray-800">{spec}</p>
+                <FiChevronRight className="text-primary-500" />
               </Link>
             ))}
           </div>
@@ -317,7 +363,7 @@ export default function Services() {
       </section>
 
       {/* Process Section */}
-      <section className="py-16 bg-white">
+      <section id="process" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="section-title">How It Works</h2>
@@ -327,37 +373,20 @@ export default function Services() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                1
+            {[
+              { step: 1, title: 'Register', desc: 'Create your account in minutes' },
+              { step: 2, title: 'Choose Service', desc: 'Select doctor or diagnostic test' },
+              { step: 3, title: 'Book & Pay', desc: 'Confirm booking and make payment' },
+              { step: 4, title: 'Get Service', desc: 'Visit clinic or get home service' }
+            ].map(({ step, title, desc }) => (
+              <div key={step} className="text-center group bg-white/80 border border-primary-50/80 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg group-hover:scale-105 transition-transform">
+                  {step}
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-gray-900">{title}</h3>
+                <p className="text-gray-600">{desc}</p>
               </div>
-              <h3 className="text-lg font-semibold mb-2">Register</h3>
-              <p className="text-gray-600">Create your account in minutes</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                2
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Choose Service</h3>
-              <p className="text-gray-600">Select doctor or diagnostic test</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                3
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Book & Pay</h3>
-              <p className="text-gray-600">Confirm booking and make payment</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                4
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Get Service</h3>
-              <p className="text-gray-600">Visit clinic or get home service</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -392,7 +421,7 @@ export default function Services() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-white">
+      <section id="cta" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-xl text-gray-600 mb-8">

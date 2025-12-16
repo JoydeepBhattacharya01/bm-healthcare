@@ -42,10 +42,17 @@ export default function Register() {
 
     setLoading(true);
 
-    const { confirmPassword, ...userData } = formData;
-    const result = await register(userData);
-
-    setLoading(false);
+    try {
+      const { confirmPassword, ...userData } = formData;
+      const result = await register(userData);
+      if (!result?.success) {
+        setLoading(false);
+      }
+      // success path handled in AuthContext (redirect + toast)
+    } catch (error) {
+      toast.error('Registration failed. Please try again.');
+      setLoading(false);
+    }
   };
 
   return (
@@ -221,7 +228,7 @@ export default function Register() {
                 />
                 <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
                   I agree to the{' '}
-                  <Link href="/terms-conditions" className="text-primary-500 hover:text-primary-600">
+                  <Link href="/terms-and-conditions" className="text-primary-500 hover:text-primary-600">
                     Terms and Conditions
                   </Link>{' '}
                   and{' '}

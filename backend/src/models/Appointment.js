@@ -1,10 +1,29 @@
 const mongoose = require('mongoose');
 
 const appointmentSchema = new mongoose.Schema({
+  bookingId: {
+    type: String,
+    unique: true
+  },
+  patientName: {
+    type: String,
+    required: [true, 'Please add patient name'],
+    trim: true
+  },
+  patientMobile: {
+    type: String,
+    required: [true, 'Please add mobile number'],
+    match: [/^[0-9]{10}$/, 'Please add a valid 10-digit mobile number']
+  },
+  patientEmail: {
+    type: String,
+    trim: true,
+    lowercase: true
+  },
   patient: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: false
   },
   doctor: {
     type: mongoose.Schema.Types.ObjectId,
@@ -62,9 +81,21 @@ const appointmentSchema = new mongoose.Schema({
   timestamps: true
 });
 
+// Generate unique booking ID before saving
+appointmentSchema.pre('save', async function(next) {
+  if (!this.bookingId) {
+    const date = new Date();
+    const timestamp = date.getTime().toString().slice(-6);
+    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    this.bookingId = `APT${timestamp}${random}`;
+  }
+  next();
+});
+
 // Index for efficient queries
-appointmentSchema.index({ patient: 1, appointmentDate: 1 });
+appointmentSchema.index({ patientMobile: 1, appointmentDate: 1 });
 appointmentSchema.index({ doctor: 1, appointmentDate: 1 });
 appointmentSchema.index({ status: 1 });
+appointmentSchema.index({ bookingId: 1 });
 
 module.exports = mongoose.model('Appointment', appointmentSchema);

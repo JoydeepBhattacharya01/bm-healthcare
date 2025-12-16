@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <Layout title="Contact Us - BM Healthcare">
       {/* Page Header - Text Only */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16">
+      <section className="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{fontFamily: 'Poppins, sans-serif'}}>
             Contact Us
@@ -67,9 +67,7 @@ export default function Contact() {
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Email</h3>
                     <p className="text-gray-600">
-                      General: info@bmhealthcare.com<br />
-                      Support: support@bmhealthcare.com<br />
-                      Appointments: appointments@bmhealthcare.com
+                      For inquiries, please call us or visit our clinic
                     </p>
                   </div>
                 </div>

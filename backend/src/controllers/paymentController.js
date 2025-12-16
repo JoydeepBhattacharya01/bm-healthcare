@@ -6,16 +6,24 @@ const Appointment = require('../models/Appointment');
 const TestBooking = require('../models/TestBooking');
 const { sendSMS, smsTemplates } = require('../utils/smsService');
 
-// Initialize Razorpay
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET
-});
+// Initialize Razorpay (guarded so local dev without keys doesn't crash)
+const hasRazorpayKeys = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET;
+const razorpay = hasRazorpayKeys
+  ? new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET
+    })
+  : null;
 
 // @desc    Create Razorpay order
 // @route   POST /api/payments/create-order
 // @access  Private
 const createOrder = asyncHandler(async (req, res) => {
+  if (!razorpay) {
+    res.status(503);
+    throw new Error('Payment gateway not configured');
+  }
+
   const { bookingType, bookingId, amount } = req.body;
 
   // Validate booking
@@ -90,6 +98,11 @@ const createOrder = asyncHandler(async (req, res) => {
 // @route   POST /api/payments/verify
 // @access  Private
 const verifyPayment = asyncHandler(async (req, res) => {
+  if (!razorpay) {
+    res.status(503);
+    throw new Error('Payment gateway not configured');
+  }
+
   const {
     razorpayOrderId,
     razorpayPaymentId,

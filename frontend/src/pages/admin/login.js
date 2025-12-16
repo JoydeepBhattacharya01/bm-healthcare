@@ -29,9 +29,7 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      console.log('Admin login attempt:', formData.email);
       const result = await login(formData.email, formData.password, true);
-      console.log('Admin login result:', result);
       
       if (result.success && result.user) {
         // Check if user is actually an admin

@@ -13,11 +13,18 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Check if user is logged in
-    const token = Cookies.get('token');
-    const userData = Cookies.get('user');
+    const token = Cookies.get('token') || localStorage.getItem('token');
+    const userData = Cookies.get('user') || localStorage.getItem('user');
 
     if (token && userData) {
       setUser(JSON.parse(userData));
+      // Sync to both storage methods if missing
+      if (!Cookies.get('token')) {
+        Cookies.set('token', token, { expires: 30 });
+      }
+      if (!localStorage.getItem('token')) {
+        localStorage.setItem('token', token);
+      }
     }
     setLoading(false);
   }, []);
@@ -27,9 +34,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await api.post('/auth/register', userData);
       
-      // Save token and user data
+      // Save token and user data to both Cookies and localStorage
       Cookies.set('token', data.token, { expires: 30 });
       Cookies.set('user', JSON.stringify(data), { expires: 30 });
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
       
       setUser(data);
       toast.success('Registration successful!');
@@ -46,14 +55,13 @@ export const AuthProvider = ({ children }) => {
   // Login user
   const login = async (email, password, skipRedirect = false) => {
     try {
-      console.log('[AuthContext] Login attempt:', { email, skipRedirect });
       const { data } = await api.post('/auth/login', { email, password });
-      console.log('[AuthContext] Login response:', data);
       
-      // Save token and user data
+      // Save token and user data to both Cookies and localStorage
       Cookies.set('token', data.token, { expires: 30 });
       Cookies.set('user', JSON.stringify(data), { expires: 30 });
-      console.log('[AuthContext] Cookies set');
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
       
       setUser(data);
       toast.success('Login successful!');
@@ -63,10 +71,8 @@ export const AuthProvider = ({ children }) => {
         const redirectPath = (data.role === 'admin' || data.role === 'receptionist') 
           ? '/admin/dashboard' 
           : '/dashboard';
-        console.log('[AuthContext] Redirecting to:', redirectPath);
         router.push(redirectPath);
       } else {
-        console.log('[AuthContext] Skipping redirect');
       }
       
       return { success: true, user: data };
@@ -83,6 +89,8 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     Cookies.remove('token');
     Cookies.remove('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
     toast.success('Logged out successfully');
     router.push('/');
@@ -93,9 +101,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await api.put('/auth/profile', userData);
       
-      // Update user data in cookies
+      // Update user data in both Cookies and localStorage
       const updatedUser = { ...user, ...data };
       Cookies.set('user', JSON.stringify(updatedUser), { expires: 30 });
+      localStorage.setItem('user', JSON.stringify(updatedUser));
       
       setUser(updatedUser);
       toast.success('Profile updated successfully!');

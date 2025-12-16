@@ -6,14 +6,14 @@ import Layout from '../components/Layout';
 import Link from 'next/link';
 import { FiCreditCard, FiMapPin, FiCheckCircle } from 'react-icons/fi';
 import toast from 'react-hot-toast';
-import axios from 'axios';
+import api from '../utils/api';
 
 export default function Checkout() {
   const router = useRouter();
   const { cart, getCartTotal, clearCart } = useCart();
   const { user, isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('online');
+  const [paymentMethod, setPaymentMethod] = useState('centre');
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -52,29 +52,26 @@ export default function Checkout() {
     try {
       const orderData = {
         tests: cart.map((item) => ({
-          test: item._id,
-          quantity: item.quantity,
+          testId: item._id,
         })),
-        totalAmount: getCartTotal(),
-        paymentMethod,
-        patientInfo: formData,
+        bookingDate: formData.appointmentDate,
+        bookingTime: formData.appointmentTime,
+        collectionType: 'walkin',
+        collectionAddress: {
+          street: formData.address,
+          city: formData.city,
+          state: formData.state,
+          pincode: formData.pincode
+        },
+        notes: `Patient: ${formData.name}, Phone: ${formData.phone}, Email: ${formData.email}`
       };
 
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/test-bookings`,
-        orderData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post('/tests/bookings', orderData);
 
-      if (response.data.success) {
+      if (response.data) {
         toast.success('Booking confirmed successfully!');
         clearCart();
-        router.push(`/dashboard?booking=${response.data.booking._id}`);
+        router.push(`/dashboard`);
       }
     } catch (error) {
       console.error('Booking error:', error);
@@ -281,45 +278,30 @@ export default function Checkout() {
                     <FiCreditCard className="mr-2" />
                     Payment Method
                   </h2>
-                  <div className="space-y-3">
-                    <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer hover:border-primary-500 transition-colors">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="online"
-                        checked={paymentMethod === 'online'}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="mr-3"
-                      />
-                      <div className="flex-1">
-                        <div className="font-semibold">Pay Online</div>
-                        <div className="text-sm text-gray-600">
-                          Pay securely using UPI, Cards, Net Banking, or Wallets
-                        </div>
-                      </div>
-                      {paymentMethod === 'online' && (
-                        <FiCheckCircle className="text-primary-500" size={24} />
-                      )}
-                    </label>
+                  
+                  <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-sm text-yellow-800 font-medium">
+                      ⚠️ Online payment is currently not available
+                    </p>
+                  </div>
 
-                    <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer hover:border-primary-500 transition-colors">
+                  <div className="space-y-3">
+                    <label className="flex items-center p-4 border-2 border-primary-500 bg-primary-50 rounded-lg cursor-pointer">
                       <input
                         type="radio"
                         name="paymentMethod"
                         value="centre"
-                        checked={paymentMethod === 'centre'}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
+                        checked={true}
+                        readOnly
                         className="mr-3"
                       />
                       <div className="flex-1">
-                        <div className="font-semibold">Pay at Diagnostic Centre</div>
+                        <div className="font-semibold text-gray-900">Pay at Diagnostic Centre</div>
                         <div className="text-sm text-gray-600">
                           Pay when you visit the diagnostic centre
                         </div>
                       </div>
-                      {paymentMethod === 'centre' && (
-                        <FiCheckCircle className="text-primary-500" size={24} />
-                      )}
+                      <FiCheckCircle className="text-primary-500" size={24} />
                     </label>
                   </div>
                 </div>
@@ -361,7 +343,7 @@ export default function Checkout() {
                     disabled={loading}
                     className="btn-primary w-full"
                   >
-                    {loading ? 'Processing...' : paymentMethod === 'online' ? 'Proceed to Payment' : 'Confirm Booking'}
+                    {loading ? 'Processing...' : 'Confirm Booking'}
                   </button>
 
                   <Link

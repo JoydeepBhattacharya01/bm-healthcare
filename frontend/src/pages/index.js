@@ -2,304 +2,217 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '../components/Layout';
-import { FiCalendar, FiActivity, FiHeart, FiShield, FiClock, FiMapPin, FiTruck, FiHome, FiEye, FiUsers, FiAward, FiZap, FiPhone, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { FaAmbulance, FaUserMd, FaHeartbeat, FaStethoscope } from 'react-icons/fa';
+import HeroSlider from '../components/HeroSlider';
+import { 
+  FiCalendar, FiActivity, FiHeart, FiShield, FiClock, FiMapPin, 
+  FiPhone, FiArrowRight, FiCheck, FiStar, FiTrendingUp,
+  FiUsers, FiAward, FiHome, FiFileText
+} from 'react-icons/fi';
+import { FaStethoscope, FaMicroscope, FaHeartbeat, FaAmbulance } from 'react-icons/fa';
 
 export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeFeature, setActiveFeature] = useState(0);
 
-  const heroSlides = [
-    '/images/hero-1.jpeg',
-    '/images/hero-2.jpeg',
-    '/images/hero-3.jpeg',
-    '/images/ambu.jpeg'
+  const features = [
+    {
+      icon: <FiCalendar className="w-6 h-6" />,
+      title: 'Easy Appointment Booking',
+      description: 'Book appointments with top doctors in seconds'
+    },
+    {
+      icon: <FiActivity className="w-6 h-6" />,
+      title: 'Advanced Diagnostics',
+      description: 'State-of-the-art lab tests and imaging services'
+    },
+    {
+      icon: <FiHome className="w-6 h-6" />,
+      title: 'Home Sample Collection',
+      description: 'Convenient doorstep sample collection service'
+    },
+    {
+      icon: <FiShield className="w-6 h-6" />,
+      title: 'NABL Certified Lab',
+      description: 'Accurate results from certified laboratories'
+    }
   ];
+
+  const stats = [
+    { value: '12hrs', label: 'Daily Service' }
+  ];
+
+  const services = [
+    {
+      icon: <FaStethoscope className="w-8 h-8" />,
+      title: 'Doctor Consultation',
+      description: 'Consult with experienced healthcare professionals',
+      color: 'from-blue-500 to-blue-600'
+    },
+    {
+      icon: <FaMicroscope className="w-8 h-8" />,
+      title: 'Lab Tests',
+      description: 'Comprehensive diagnostic tests with quick results',
+      color: 'from-primary-500 to-primary-600'
+    },
+    {
+      icon: <FaHeartbeat className="w-8 h-8" />,
+      title: 'Health Packages',
+      description: 'Customized health checkup packages for all ages',
+      color: 'from-pink-500 to-pink-600'
+    },
+    {
+      icon: <FaAmbulance className="w-8 h-8" />,
+      title: 'Emergency Care',
+      description: 'Ambulance and emergency medical services during working hours',
+      color: 'from-red-500 to-red-600'
+    }
+  ];
+
+  const testimonials = [];
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [heroSlides.length]);
-
-  const specialServices = [
-    {
-      icon: <FaAmbulance size={32} />,
-      title: '24 Hours Ambulance Service',
-      description: 'Emergency medical transport available round the clock',
-      image: '/images/ambu.jpeg'
-    },
-    {
-      icon: <FiHome size={32} />,
-      title: 'Home Collection Service',
-      description: 'Blood Sample and ECG collection at your doorstep',
-      image: '/images/homecollection.jpeg'
-    },
-    {
-      icon: <FiActivity size={32} />,
-      title: 'Advanced Diagnostic Tests',
-      description: 'CT Scan, MRI, ECHO, Endoscopy, Ultrasonography',
-      image: '/images/test.jpeg'
-    },
-    {
-      icon: <FiUsers size={32} />,
-      title: 'Elderly Care',
-      description: 'Priority home visits and comfortable facilities',
-      image: '/images/elder.jpeg'
-    },
-    {
-      icon: <FiShield size={32} />,
-      title: 'Police & Ex-Servicemen',
-      description: 'Exclusive healthcare support with discounted services',
-      image: '/images/police.jpeg'
-    },
-    {
-      icon: <FiClock size={32} />,
-      title: 'Quick Blood Reports',
-      description: 'Blood reports within 1 to 4 hours',
-      image: '/images/delivery.png'
-    },
-    {
-      icon: <FiEye size={32} />,
-      title: 'AIIMS Eye Specialist',
-      description: 'Expert eye care by AIIMS-experienced doctors',
-      image: '/images/eye doctor.jpeg'
-    },
-    {
-      icon: <FiHeart size={32} />,
-      title: 'Swasthya Sathi',
-      description: 'Treatment facilities for card holders',
-      image: '/images/swasthya sathi.jpeg'
-    }
-  ];
-
-  const healthPackages = [
-    {
-      icon: <FaHeartbeat size={32} />,
-      title: 'Diabetes Care Package',
-      description: 'Comprehensive diabetes screening and monitoring',
-      tests: 'HbA1c, Fasting Sugar, PP Sugar, Lipid Profile'
-    },
-    {
-      icon: <FiHeart size={32} />,
-      title: 'Cardiovascular Package',
-      description: 'Complete heart health assessment',
-      tests: 'ECG, ECHO, Lipid Profile, Cardiac Enzymes'
-    },
-    {
-      icon: <FaStethoscope size={32} />,
-      title: 'Full Body Checkup',
-      description: 'Complete health screening for all age groups',
-      tests: 'CBC, LFT, KFT, Thyroid, Vitamin D, B12'
-    },
-    {
-      icon: <FiUsers size={32} />,
-      title: 'Senior Citizen Package',
-      description: 'Specialized health checkup for elderly',
-      tests: 'Bone Density, Cardiac Profile, Diabetes Screening'
-    }
-  ];
-
-  const whyChooseUs = [
-    {
-      icon: <FiShield size={48} />,
-      title: 'Trusted & Certified',
-      description: 'NABL accredited laboratory with ISO certification'
-    },
-    {
-      icon: <FiClock size={48} />,
-      title: 'Quick Results',
-      description: 'Fast turnaround time with online access'
-    },
-    {
-      icon: <FiMapPin size={48} />,
-      title: 'Home Collection',
-      description: 'Convenient doorstep sample collection'
-    }
-  ];
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % features.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [features.length]);
 
   return (
     <Layout>
-      {/* Hero Section - Sliding Carousel */}
-      <section className="relative w-full overflow-hidden group">
-        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}> {/* 16:9 aspect ratio */}
-          {heroSlides.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <Image
-                src={slide}
-                alt={`BM Healthcare ${index + 1}`}
-                fill
-                className={slide === '/images/ambu.jpeg' ? 'object-cover object-left' : 'object-cover'}
-                priority={index === 0}
-                sizes="100vw"
-              />
-              {/* Text overlay for ambulance slide */}
-              {slide === '/images/ambu.jpeg' && (
-                <div className="absolute inset-0 flex items-center justify-end pr-4 md:pr-12 lg:pr-20">
-                  <div className="bg-red-600/90 backdrop-blur-sm text-white px-6 py-8 md:px-10 md:py-12 rounded-2xl shadow-2xl max-w-md">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3" style={{fontFamily: 'Poppins, sans-serif'}}>
-                      24×7 Ambulance Service
-                    </h2>
-                    <p className="text-base md:text-lg lg:text-xl mb-4 font-medium">
-                      Emergency Medical Transport Available Round the Clock
-                    </p>
-                    <div className="flex flex-col gap-3">
-                      <a href="tel:+919830016600" className="bg-white text-red-600 hover:bg-gray-100 px-6 py-3 rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2">
-                        <FiPhone size={20} />
-                        <span>+91 9830016600</span>
-                      </a>
-                      <a href="tel:+919830036600" className="border-2 border-white text-white hover:bg-white hover:text-red-600 px-6 py-3 rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2">
-                        <FiPhone size={20} />
-                        <span>+91 9830036600</span>
-                      </a>
+      {/* Hero Slider - Admin can manage images */}
+      <HeroSlider />
+
+      {/* Modern Hero Section */}
+      <section className="relative bg-gradient-to-br from-slate-50 via-white to-primary-50 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl animate-float animation-delay-200"></div>
+          <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl animate-float animation-delay-400"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 lg:pt-32 lg:pb-32">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Hero Content */}
+            <div className="text-center lg:text-left animate-fade-in-up">
+              <div className="inline-flex items-center px-4 py-2 bg-primary-50 rounded-full text-primary-700 text-sm font-medium mb-6">
+                <FiShield className="w-4 h-4 mr-2" />
+                NABL Certified Healthcare
+              </div>
+              
+              <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 mb-6 leading-tight">
+                Your Health,
+                <span className="block gradient-text-primary">Our Priority</span>
+              </h1>
+              
+              <p className="text-xl text-slate-600 mb-8 leading-relaxed max-w-2xl">
+                Book appointments, diagnostic tests, and get expert healthcare services from the comfort of your home.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+                <Link href="/book-doctor" className="btn-primary text-base px-8 py-4 group">
+                  Book Doctor
+                  <FiArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link href="/book-test" className="btn-outline text-base px-8 py-4">
+                  Book Test
+                </Link>
+              </div>
+              
+              {/* My Bookings Link */}
+              <div className="flex justify-center lg:justify-start">
+                <Link href="/my-bookings" className="text-primary-600 hover:text-primary-700 font-medium flex items-center gap-2">
+                  <FiFileText className="w-5 h-5" />
+                  View My Bookings
+                </Link>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="flex justify-center lg:justify-start">
+                {stats.map((stat, index) => (
+                  <div key={index} className="text-center lg:text-left">
+                    <div className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</div>
+                    <div className="text-sm text-slate-600">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Hero Image/Features */}
+            <div className="relative animate-fade-in-up animation-delay-200">
+              <div className="relative bg-white rounded-3xl shadow-xl p-8 border border-slate-100 mb-20 lg:mb-0">
+                <div className="space-y-4">
+                  {features.map((feature, index) => (
+                    <div
+                      key={index}
+                      className={`flex items-start gap-4 p-4 rounded-2xl transition-all duration-300 ${
+                        activeFeature === index
+                          ? 'bg-primary-50 border-2 border-primary-200'
+                          : 'bg-slate-50 border-2 border-transparent'
+                      }`}
+                    >
+                      <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${
+                        activeFeature === index
+                          ? 'bg-primary-600 text-white'
+                          : 'bg-white text-slate-600'
+                      } transition-all duration-300`}>
+                        {feature.icon}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-slate-900 mb-1">{feature.title}</h3>
+                        <p className="text-sm text-slate-600">{feature.description}</p>
+                      </div>
+                      {activeFeature === index && (
+                        <FiCheck className="w-5 h-5 text-primary-600 flex-shrink-0" />
+                      )}
                     </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Floating Emergency Card */}
+              <div className="absolute -bottom-16 left-0 right-0 lg:-bottom-6 lg:-right-6 lg:left-auto bg-gradient-to-br from-red-500 to-red-600 text-white rounded-2xl shadow-xl p-6 max-w-xs mx-auto lg:mx-0">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FiPhone className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium opacity-90">Emergency Contact</div>
+                    <div className="text-lg font-bold">+91 9830016600</div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
-          ))}
-
-        {/* Previous Button */}
-        <button
-          onClick={() => setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))}
-          className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 z-30 bg-white/80 hover:bg-white text-gray-800 p-2 md:p-3 rounded-full shadow-lg transition-all duration-300 md:opacity-0 md:group-hover:opacity-100 hover:scale-110"
-          aria-label="Previous slide"
-        >
-          <FiChevronLeft size={20} className="md:w-6 md:h-6" />
-        </button>
-
-        {/* Next Button */}
-        <button
-          onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
-          className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 z-30 bg-white/80 hover:bg-white text-gray-800 p-2 md:p-3 rounded-full shadow-lg transition-all duration-300 md:opacity-0 md:group-hover:opacity-100 hover:scale-110"
-          aria-label="Next slide"
-        >
-          <FiChevronRight size={20} className="md:w-6 md:h-6" />
-        </button>
-
-        {/* Carousel Indicators */}
-        <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
-          {heroSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentSlide ? 'bg-white w-8' : 'bg-white/50'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-        </div>
-      </section>
-
-      {/* Brand Banner Below Hero */}
-      <section className="bg-gradient-to-r from-primary-600 via-primary-700 to-primary-600 py-10 md:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3" style={{fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.01em'}}>
-            B.M HEALTH CARE
-          </h1>
-          <div className="text-xs md:text-sm lg:text-base font-medium mb-2 tracking-wider">
-            DIAGNOSTIC | POLY CLINIC | AMBULANCE | PORTABLE SERVICES
-          </div>
-          <p className="text-base md:text-lg italic mb-6 text-primary-100">
-            বিশ্বাস আপনার, সেবা আমাদের
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <Link href="/doctors" className="bg-white text-primary-600 hover:bg-primary-50 px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm md:text-base">
-              Book Appointment
-            </Link>
-            <Link href="/tests" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm md:text-base">
-              Book Test
-            </Link>
-            <a href="tel:+919830016600" className="bg-accent-600 hover:bg-accent-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center space-x-2 text-sm md:text-base">
-              <FiPhone size={18} />
-              <span>Emergency</span>
-            </a>
           </div>
         </div>
       </section>
 
-
-      {/* Emergency Ambulance Section */}
-      <section className="py-16 bg-gradient-to-br from-red-50 to-white">
+      {/* Services Section - Icon Based (No Images) */}
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* Ambulance Image */}
-            <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/ambu.jpeg"
-                alt="24 Hours Ambulance Service"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-            
-            {/* Content */}
-            <div className="text-center lg:text-left">
-              <div className="inline-block bg-red-100 text-red-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-                EMERGENCY SERVICE
-              </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900" style={{fontFamily: 'Poppins, sans-serif'}}>
-                24 Hours Ambulance Service Available
-              </h2>
-              <p className="text-lg text-gray-600 mb-6">
-                Round-the-clock emergency medical transport with trained staff and well-equipped ambulances. Always ready to serve you in critical situations.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                <a href="tel:+919830016600" className="bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center space-x-2 text-base md:text-lg">
-                  <FiPhone size={20} />
-                  <span>Call Now: +91 9830016600</span>
-                </a>
-                <a href="tel:+919830036600" className="border-2 border-red-600 text-red-600 hover:bg-red-50 px-8 py-4 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center space-x-2 text-base md:text-lg">
-                  <FiPhone size={20} />
-                  <span>+91 9830036600</span>
-                </a>
-              </div>
-              <div className="mt-6 flex items-center justify-center lg:justify-start space-x-6 text-sm text-gray-600">
-                <div className="flex items-center space-x-2">
-                  <FiClock className="text-red-600" size={20} />
-                  <span>24/7 Available</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <FiShield className="text-red-600" size={20} />
-                  <span>Trained Staff</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Healthcare Packages Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Healthcare Packages</h2>
-            <p className="section-subtitle">
-              Specialized health checkup packages designed for your specific needs
+          <div className="text-center mb-16">
+            <h2 className="section-heading">Our Services</h2>
+            <p className="section-subheading mx-auto">
+              Comprehensive healthcare solutions tailored to your needs
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {healthPackages.map((pkg, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, index) => (
               <Link
                 key={index}
-                href="/tests?category=Health+Package"
-                className="card text-center card-hover group border border-gray-200 hover:border-primary-300 transition-all"
+                href={index === 0 ? '/book-doctor' : index === 1 ? '/book-test' : index === 3 ? 'tel:+919830016600' : '/services'}
+                className="group card-modern hover:scale-105"
               >
-                <div className="text-primary-600 mb-4 flex justify-center group-hover:scale-110 transition-transform">
-                  {pkg.icon}
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  {service.icon}
                 </div>
-                <h3 className="text-lg font-bold mb-2 text-gray-800 group-hover:text-primary-600 transition-colors">{pkg.title}</h3>
-                <p className="text-gray-600 text-sm mb-3">{pkg.description}</p>
-                <p className="text-xs text-gray-500 italic">{pkg.tests}</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
+                <p className="text-slate-600 mb-4">{service.description}</p>
+                <div className="flex items-center text-primary-600 font-medium">
+                  {index === 3 ? 'Call Now' : 'Learn more'}
+                  <FiArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </Link>
             ))}
           </div>
@@ -307,104 +220,140 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-primary-50">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Why Choose BM Healthcare?</h2>
-            <p className="section-subtitle">
-              Your trusted healthcare partner
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {whyChooseUs.map((item, index) => (
-            <div key={index} className="bg-white p-8 rounded-2xl shadow-lg card-hover group border border-gray-200 hover:border-primary-300 transition-all">
-              <div className="text-primary-600 mb-4 flex justify-center group-hover:scale-110 transition-transform">
-                {item.icon}
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-center text-gray-800 group-hover:text-primary-600 transition-colors">{item.title}</h3>
-              <p className="text-gray-600 text-center text-sm">
-                {item.description}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+                Why Choose BM Healthcare?
+              </h2>
+              <p className="text-lg text-slate-600 mb-8">
+                We combine cutting-edge technology with compassionate care to deliver the best healthcare experience.
               </p>
+
+              <div className="space-y-6">
+                {[
+                  { icon: <FiShield />, title: 'NABL Certified', desc: 'Accredited laboratory with ISO certification' },
+                  { icon: <FiClock />, title: 'Quick Results', desc: 'Fast turnaround time with online access' },
+                  { icon: <FiUsers />, title: 'Expert Team', desc: 'Experienced doctors and healthcare professionals' },
+                  { icon: <FiAward />, title: 'Quality Care', desc: 'Committed to excellence in healthcare delivery' }
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900 mb-1">{item.title}</h3>
+                      <p className="text-slate-600">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            ))}
+
+            <div className="relative">
+              <div className="bg-white rounded-2xl shadow-soft p-8 border border-slate-100">
+                <div className="text-center">
+                  <div className="text-5xl font-bold text-primary-600 mb-3">12hrs</div>
+                  <div className="text-xl text-slate-900 font-semibold mb-2">Daily Service Available</div>
+                  <div className="text-slate-600">8:00 AM - 8:00 PM, Open Every Day</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
+
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{fontFamily: 'Poppins, sans-serif'}}>
+      <section className="py-24 bg-gradient-to-br from-primary-600 to-primary-700 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Ready to Take Care of Your Health?
           </h2>
-          <p className="text-lg md:text-xl lg:text-2xl mb-8 font-light">
-            Book your appointment or diagnostic test today
+          <p className="text-xl text-primary-100 mb-10 max-w-2xl mx-auto">
+            Book your appointment or diagnostic test today and experience quality healthcare
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/doctors" className="bg-white text-primary-600 hover:bg-primary-50 px-8 py-4 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-base md:text-lg">
-              Find a Doctor
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/book-doctor" className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-700 rounded-xl font-semibold hover:bg-primary-50 transition-all duration-200 shadow-soft hover:shadow-medium">
+              Book Doctor
+              <FiArrowRight className="ml-2 w-5 h-5" />
             </Link>
-            <Link href="/tests" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-base md:text-lg">
-              Browse Tests
+            <Link href="/book-test" className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-primary-700 transition-all duration-200">
+              Book Test
             </Link>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Get in Touch</h2>
-            <p className="section-subtitle">We're here to help you with all your healthcare needs</p>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4 p-6 bg-primary-50 rounded-xl">
-                <FiMapPin className="text-primary-600 mt-1 flex-shrink-0" size={24} />
-                <div>
-                  <h4 className="font-semibold mb-2 text-gray-800">Address</h4>
-                  <p className="text-gray-600 text-sm">
-                    AS/85, Christanpara, P.O-Krishnapur, Kestopur<br />
-                    24 North Parganas, Kolkata, West Bengal - 700102
-                  </p>
+          <div className="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h2 className="text-4xl font-bold text-slate-900 mb-6">Get in Touch</h2>
+              <p className="text-lg text-slate-600 mb-8">
+                We're here to help you with all your healthcare needs
+              </p>
+
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center">
+                    <FiMapPin className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Address</h3>
+                    <p className="text-slate-600">
+                      AS/85, Christanpara, P.O-Krishnapur, Kestopur<br />
+                      24 North Parganas, Kolkata, West Bengal - 700102
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start space-x-4 p-6 bg-primary-50 rounded-xl">
-                <FiPhone className="text-primary-600 mt-1 flex-shrink-0" size={24} />
-                <div>
-                  <h4 className="font-semibold mb-2 text-gray-800">Phone</h4>
-                  <p className="text-gray-600 text-sm">
-                    +91 9830016600 / +91 9830036600
-                  </p>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center">
+                    <FiPhone className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Phone</h3>
+                    <p className="text-slate-600">
+                      <a href="tel:+919830016600" className="hover:text-primary-600">+91 9830016600</a> / 
+                      <a href="tel:+919830036600" className="hover:text-primary-600"> +91 9830036600</a>
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start space-x-4 p-6 bg-primary-50 rounded-xl">
-                <FiClock className="text-primary-600 mt-1 flex-shrink-0" size={24} />
-                <div>
-                  <h4 className="font-semibold mb-2 text-gray-800">Working Hours</h4>
-                  <p className="text-gray-600 text-sm">
-                    Monday - Sunday<br />
-                    8:00 AM - 8:00 PM (Open Every Day)
-                  </p>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center">
+                    <FiClock className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Working Hours</h3>
+                    <p className="text-slate-600">
+                      Monday - Sunday<br />
+                      8:00 AM - 8:00 PM (Open Every Day)
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <div className="rounded-xl overflow-hidden shadow-lg h-full min-h-[300px]">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d574.8246378118725!2d88.43549998386233!3d22.586659382397478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275005d198bb5%3A0x5d039fe4588d67e5!2sBM%20HEALTH%20CARE!5e0!3m2!1sen!2sin!4v1762541596502!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, minHeight: '300px' }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="BM Healthcare Location"
-                ></iframe>
-              </div>
+            <div className="bg-white rounded-2xl shadow-soft border border-slate-100 overflow-hidden h-[500px]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d574.8246378118725!2d88.43549998386233!3d22.586659382397478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275005d198bb5%3A0x5d039fe4588d67e5!2sBM%20HEALTH%20CARE!5e0!3m2!1sen!2sin!4v1762541596502!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="BM Healthcare Location"
+              ></iframe>
             </div>
           </div>
         </div>

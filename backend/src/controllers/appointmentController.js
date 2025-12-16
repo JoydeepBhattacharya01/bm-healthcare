@@ -101,7 +101,7 @@ const getAppointments = asyncHandler(async (req, res) => {
     .populate('payment')
     .limit(limit * 1)
     .skip((page - 1) * limit)
-    .sort({ appointmentDate: -1, appointmentTime: -1 });
+    .sort({ appointmentDate: 1, appointmentTime: 1 });
 
   const count = await Appointment.countDocuments(query);
 

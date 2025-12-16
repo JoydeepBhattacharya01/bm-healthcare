@@ -19,6 +19,10 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:3002',
+    'http://localhost:3003',
+    'http://localhost:3004',
     'http://192.168.1.5:3000',
     process.env.FRONTEND_URL
   ].filter(Boolean),
@@ -36,6 +40,8 @@ app.get('/', (req, res) => {
 });
 
 // API Routes
+app.use('/api/bookings', require('./routes/bookingRoutes')); // Public booking routes
+app.use('/api/reception', require('./routes/receptionRoutes')); // Reception routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/doctors', require('./routes/doctorRoutes'));
