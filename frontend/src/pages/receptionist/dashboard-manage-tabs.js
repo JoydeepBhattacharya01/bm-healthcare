@@ -1,3 +1,8 @@
+import { useState, useEffect } from 'react';
+import api from '../../utils/api';
+import toast from 'react-hot-toast';
+import { FiPlus, FiX, FiTrash2 } from 'react-icons/fi';
+
 // Manage Doctors Tab Component
 function ManageDoctorsTab() {
   const [doctors, setDoctors] = useState([]);
@@ -638,6 +643,19 @@ function ManageTestsTab() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// Default export for Next.js page
+export default function DashboardManageTabs() {
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Dashboard Management</h1>
+        <p className="text-gray-600 mb-4">This page contains reusable tab components.</p>
+        <p className="text-gray-600">Import these components in your main dashboard page.</p>
+      </div>
     </div>
   );
 }
